@@ -159,7 +159,7 @@ order by Media;
 ##Exercici 1
 #Quantes targetes estan actives?
 create table Actives_Cards as
-select card_id, declined from
+select distinct card_id, declined from
 (select id, card_id, timestamp, declined,
 	row_number() over(partition by card_id order by timestamp desc)	as ultims_popularity
 from transactions) as pop 
@@ -171,6 +171,8 @@ from transactions) as pop2
 where pop2.card_id = pop.card_id and ultims_popularity <=3 
 and pop2.declined=0);
 
+
+
 /*select user_id, count(credit_cards.id) as ids
 from credit_cards
 where id in (select card_id from transactions 
@@ -179,15 +181,13 @@ group by card_id
 having count(card_id) > 3)
 group by user_id;*/
 
-select *
-from credit_cards
-where id not in ( select credit_card_id from declinadas2 ); -- 188rows nada q ver con lo q me pide el enunciado
+
 
 /*select columnes transaction, row number() over(partition by from transaction);
 select id, card_id, timestamp
 from transactions
 order by timestamp desc;
--- columna de rownumber:*/
+-- columna de rownumber:
 
 -- provem:
 select id, card_id, timestamp,
@@ -205,7 +205,7 @@ select card_id, declined from
 (select id, card_id, timestamp, declined,
 	row_number() over(partition by card_id order by timestamp desc)	as ultims_popularity
 from transactions) as pop 
-where ultims_popularity <=3;
+where ultims_popularity <=3;*/
 
 
 ## Nivell 3
